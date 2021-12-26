@@ -48,41 +48,37 @@
 		<div class="container-fluid">
 			<div class="row">
 
-				<div th:replace="~{commons/commons::sideBar(active='list.html')}"></div>
+				<div th:replace="~{commons/commons::sideBar(active='listCustomers.html')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<h2>员工表</h2>
-					<h3><a class="btn btn-sm btn-success" th:href="@{/addEmp}">添加员工</a></h3>
-					<div class="table-responsive">
-						<table class="table table-striped table-sm">
-							<thead>
-								<tr>
-									<th>eid</th>
-									<th>lastName</th>
-									<th>email</th>
-									<th>gender</th>
-									<th>department</th>
-									<th>birth</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="emp:${emps}">
-									<td th:text="${emp.getEid()}"></td>
-									<td th:text="${emp.getLastName()}"></td>
-									<td th:text="${emp.getEmail()}"></td>
-									<td th:text="${emp.getGender()==0?'女':'男'}"></td>
-									<td th:text="${emp.getDepartment().getDepartmentName()}"></td>
-									<td th:text="${#dates.format(emp.getBirth(), 'yyyy-MM-dd HH:mm:ss')}"></td>
-									<td>
-<!--										th:href="@{/toUpdate(id=${emp.getId()})}"-->
-										<a class="btn btn-sm btn-primary" th:href="@{'/update/' + ${emp.getEid()}}">编辑</a>
-										<a class="btn btn-sm btn-danger" th:href="@{'/delete/' + ${emp.getEid()}}">删除</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<p style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+					<form th:action="@{/addCustomers}" method="post">
+						<div class="form-group">
+							<label>firstName</label>
+							<input name="firstName" type="text" class="form-control" placeholder="请输入firstName（0-20个字符）" required>
+						</div>
+						<div class="form-group">
+							<label>lastName</label>
+							<input name="lastName" type="text" class="form-control" placeholder="请输入lastName（0-20个字符）" required>
+						</div>
+						<div class="form-group">
+							<label>phone</label>
+							<input name="phone" type="text" class="form-control" placeholder="请输入phone（10位数字）" required>
+						</div>
+						<div class="form-group">
+							<label>address</label>
+							<input name="address" type="text" class="form-control" placeholder="请输入address" required>
+						</div>
+						<div class="form-group">
+							<label>emailAddr</label>
+							<input name="emailAddr" type="text" class="form-control" placeholder="请输入emailAddr（0-20个字符）" required>
+						</div>
+						<div class="form-group">
+							<label>creditCardID</label>
+							<input name="creditCardID" type="text" class="form-control" placeholder="请输入creditCardID（12位数字）" required>
+						</div>
+						<button type="submit" class="btn btn-primary">添加</button>
+					</form>
 				</main>
 			</div>
 		</div>

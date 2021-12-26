@@ -48,41 +48,47 @@
 		<div class="container-fluid">
 			<div class="row">
 
-				<div th:replace="~{commons/commons::sideBar(active='list.html')}"></div>
+				<div th:replace="~{commons/commons::sideBar(active='listCustomers.html')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/addEmp}" method="post">
+					<form th:action="@{/updateCustomers}" method="post">
+<!--						防止不断增加，通过隐藏域携带eid-->
+<!--						<input type="hidden" name="bagID" th:value="${handbag.getBagID()}">-->
 						<div class="form-group">
-							<label>LastName</label>
-							<input name="lastName" type="text" class="form-control" placeholder="fming">
+							<label>customerID</label>
+							<input type="hidden" name="customerID" th:value="${customer.getCustomerID()}">
+							<span required th:text="${customer.getCustomerID()}" name="customerID" type="text" class="form-control"></span>
 						</div>
 						<div class="form-group">
-							<label>Email</label>
-							<input name="email" type="text" class="form-control" placeholder="1487792164@qq.com">
+							<label>firstName</label>
+							<input required th:value="${customer.getFirstName()}" name="firstName" type="text" class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Gender</label><br/>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="gender" value="1">
-								<label class="form-check-label">男</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="gender" value="0">
-								<label class="form-check-label">女</label>
-							</div>
+							<label>lastName</label>
+							<input required th:value="${customer.getLastName()}" name="lastName" type="text" class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Department</label>
-							<select class="form-control" name="department.id">
-								<option th:each="dept:${departments}" th:text="${dept.getDepartmentName()}"
-										th:value="${dept.getId()}"></option>
-							</select>
+							<label>phone</label>
+							<input required th:value="${customer.getPhone()}" name="phone" type="text" class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Birth</label>
-							<input name="birth" type="text" class="form-control" placeholder="yyyy-MM-dd">
+							<label>address</label>
+							<input required th:value="${customer.getAddress()}" name="address" type="text" class="form-control">
 						</div>
-						<button type="submit" class="btn btn-primary">添加</button>
+						<div class="form-group">
+							<label>emailAddr</label>
+							<input required th:value="${customer.getEmailAddr()}" name="emailAddr" type="text" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>creditCardID</label>
+							<input required th:value="${customer.getCreditCardID()}" name="creditCardID" type="text" class="form-control">
+						</div>
+						<div class="form-group">
+							<label>totalLengthOfRental</label>
+							<input type="hidden" name="totalLengthOfRental" th:value="${customer.getTotalLengthOfRental()}">
+							<span th:text="${customer.getTotalLengthOfRental()}" name="totalLengthOfRental" type="text" class="form-control"></span>
+						</div>
+						<button type="submit" class="btn btn-primary">确认修改</button>
 					</form>
 				</main>
 			</div>

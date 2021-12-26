@@ -39,6 +39,13 @@
 				-webkit-animation: chartjs-render-animation 0.001s;
 				animation: chartjs-render-animation 0.001s;
 			}
+
+			.form-control-searchType {
+				width:150px;
+			}
+			.form-control-searchContent {
+				width:400px;
+			}
 		</style>
 	</head>
 
@@ -48,44 +55,34 @@
 		<div class="container-fluid">
 			<div class="row">
 
-				<div th:replace="~{commons/commons::sideBar(active='list.html')}"></div>
+				<div th:replace="~{commons/commons::sideBar(active='listRentals.html')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<form th:action="@{/updateEmp}" method="post">
-<!--						防止不断增加，通过隐藏域携带eid-->
-						<input type="hidden" name="eid" th:value="${emp.getEid()}">
-						<div class="form-group">
-							<label>LastName</label>
-							<input th:value="${emp.getLastName()}" name="lastName" type="text" class="form-control" placeholder="fming">
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input th:value="${emp.getEmail()}" name="email" type="text" class="form-control" placeholder="1487792164@qq.com">
-						</div>
-						<div class="form-group">
-							<label>Gender</label><br/>
-							<div class="form-check form-check-inline">
-								<input th:checked="${emp.getGender()==1}" class="form-check-input" type="radio" name="gender" value="1">
-								<label class="form-check-label">男</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input th:checked="${emp.getGender()==0}" class="form-check-input" type="radio" name="gender" value="0">
-								<label class="form-check-label">女</label>
-							</div>
-						</div>
-						<div class="form-group">
-							<label>Department</label>
-							<select class="form-control" name="department.id">
-								<option th:selected="${dept.getId()==emp.getDepartment().getId()}" th:each="dept:${departments}" th:text="${dept.getDepartmentName()}"
-										th:value="${dept.getId()}"></option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Birth</label>
-							<input th:value="${#dates.format(emp.getBirth(), 'yyyy-MM-dd HH:mm')}" name="birth" type="text" class="form-control" placeholder="yyyy-MM-dd">
-						</div>
-						<button type="submit" class="btn btn-primary">确认修改</button>
-					</form>
+					<h2>交易信息</h2>
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead>
+								<tr  align="center">
+									<th>firstName</th>
+									<th>lastName</th>
+									<th>bagName</th>
+									<th>totalLengthOfRental</th>
+									<th>totalPriceOfRental</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr align="center">
+									<td th:text="${firstName}"></td>
+									<td th:text="${lastName}"></td>
+									<td th:text="${bagName}"></td>
+									<td th:text="${totalLengthOfRental}"></td>
+									<td th:text="${totalPriceOfRental}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<h3><a class="btn btn-sm btn-success" th:href="@{/listRentals}">返回</a></h3>
+					</div>
+
 				</main>
 			</div>
 		</div>

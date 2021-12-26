@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.leasingluxury.mapper.HandbagsMapper">
+
+    <select id="queryHandbagsList" resultType="com.example.leasingluxury.pojo.Handbags">
+        select * from leasingluxury.handbags
+            order by bagID
+    </select>
+
+    <select id="getHandbagByName" resultType="com.example.leasingluxury.pojo.Handbags" parameterType="java.lang.String">
+        select * from leasingluxury.handbags
+            where bagName = #{bagName}
+    </select>
+
+    <insert id="add_handbags" statementType="CALLABLE">
+        {
+            call add_handbags (
+                #{bagName, mode=IN, jdbcType=VARCHAR},
+                #{manufacturer, mode=IN, jdbcType=VARCHAR},
+                #{designer, mode=IN, jdbcType=VARCHAR},
+                #{bagType, mode=IN, jdbcType=VARCHAR},
+                #{color, mode=IN, jdbcType=VARCHAR},
+                #{pricePerDay, mode=IN, jdbcType=VARCHAR}
+            )
+        }
+    </insert>
+
+    <select id="bag_by_manufacturer" statementType="CALLABLE" resultType="com.example.leasingluxury.pojo.Handbags">
+        {
+            call bag_by_manufacturer (
+                #{designer, mode=IN, jdbcType=VARCHAR}
+            )
+        }
+    </select>
+
+<!--    <select id="searchAllHandbags" parameterType="java.lang.String" resultType="com.example.leasingluxury.pojo.Handbags">-->
+<!--        select *-->
+<!--            from leasingluxury.handbags-->
+<!--            where handbags.bagID like '%${searchContent}%'-->
+<!--                or handbags.bagName like '%${searchContent}%'-->
+<!--                or handbags.manufacturer like '%${searchContent}%'-->
+<!--                or handbags.designer like '%${searchContent}%'-->
+<!--                or handbags.bagType like '%${searchContent}%'-->
+<!--                or handbags.color like '%${searchContent}%'-->
+<!--                or handbags.pricePerDay like '%${searchContent}%'-->
+<!--                or handbags.bagStatus like '%${searchContent}%'-->
+<!--    </select>-->
+
+    <select id="searchHandbags" statementType="CALLABLE" resultType="com.example.leasingluxury.pojo.Handbags">
+        {
+            call searchHandbags (
+                #{searchType, mode=IN, jdbcType=VARCHAR},
+                #{searchContent, mode=IN, jdbcType=VARCHAR}
+            )
+        }
+    </select>
+
+    <select id="getHandbagsByID" parameterType="java.lang.String" resultType="com.example.leasingluxury.pojo.Handbags">
+        select *
+            from leasingluxury.handbags
+            where bagID = #{bagID}
+    </select>
+
+    <update id="updateHandbags" parameterType="Map">
+        update leasingluxury.handbags
+            set bagName = #{bagName},
+                manufacturer = #{manufacturer},
+                designer = #{designer},
+                bagType = #{bagType},
+                color = #{color},
+                pricePerDay = #{pricePerDay}
+            where bagID = #{bagID}
+    </update>
+
+    <delete id="deleteHandbagsByID" parameterType="java.lang.String">
+        delete from leasingluxury.handbags
+            where bagID = #{bagID}
+    </delete>
+
+    <select id="getHandbagNameByID" parameterType="java.lang.String" resultType="java.lang.String">
+        select bagName
+            from leasingluxury.handbags
+            where bagID = #{bagID}
+    </select>
+
+    <select id="getAllDesigners" resultType="java.lang.String">
+        select distinct(designer) from leasingluxury.handbags;
+    </select>
+
+    <select id="bag_by_designer" statementType="CALLABLE" resultType="com.example.leasingluxury.pojo.Handbags">
+        {
+            call bag_by_designer (
+                #{designer, mode=IN, jdbcType=VARCHAR}
+            )
+        }
+    </select>
+
+</mapper>

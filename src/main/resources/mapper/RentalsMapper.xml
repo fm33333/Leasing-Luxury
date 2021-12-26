@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.leasingluxury.mapper.RentalsMapper">
+
+    <select id="queryRentalsList" resultType="com.example.leasingluxury.pojo.Rentals">
+        select * from leasingluxury.rentals
+    </select>
+
+    <select id="searchRentals" statementType="CALLABLE" resultType="com.example.leasingluxury.pojo.Rentals">
+        {
+            call searchRentals(
+                #{searchType, mode=IN, jdbcType=VARCHAR},
+                #{searchContent, mode=IN, jdbcType=VARCHAR}
+            )
+        }
+    </select>
+
+    <insert id="add_rentals" statementType="CALLABLE">
+        {
+            call add_rentals (
+                #{customerID, mode=IN, jdbcType=CHAR},
+                #{bagID, mode=IN, jdbcType=CHAR},
+                #{dateRented, mode=IN, jdbcType=TIMESTAMP},
+                #{dateReturned, mode=IN, jdbcType=TIMESTAMP},
+                #{insurance, mode=IN, jdbcType=SMALLINT}
+            )
+        }
+    </insert>
+
+    <select id="report_info_afterReturned" parameterType="java.lang.String" resultType="java.lang.Integer">
+        {
+            call report_info_afterReturned (
+                #{rentalID, mode=IN, jdbcType=CHAR}
+            )
+        }
+    </select>
+
+    <select id="report_info2_afterReturned" parameterType="java.lang.String" resultType="java.lang.Double">
+        {
+            call report_info2_afterReturned (
+                #{rentalID, mode=IN, jdbcType=CHAR}
+            )
+        }
+    </select>
+
+    <select id="getRentalByID" parameterType="java.lang.String" resultType="com.example.leasingluxury.pojo.Rentals">
+        select * from leasingluxury.rentals where rentalID=#{rentalID}
+    </select>
+
+    <delete id="deleteRentals" parameterType="java.lang.String">
+        delete from leasingluxury.rentals
+            where rentalID = #{rentalID}
+    </delete>
+
+</mapper>
